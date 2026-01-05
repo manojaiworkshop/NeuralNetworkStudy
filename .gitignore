@@ -1,0 +1,65 @@
+# .gitignore for C++ Neural Network Project
+
+# Build directories
+build/
+cmake-build-*/
+sentencepiece/
+venv/
+vision_data/
+# Compiled Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+*.la
+
+# Executables
+*.exe
+*.out
+*.app
+xor_example
+basic_nn_example
+test_matrix
+test_activation
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+Testing/
+
+# Documentation
+docs/html/
+docs/latex/
+
+# Data files (except examples)
+data/*.csv
+data/*.txt
+data/*.dat
+!data/README.md
+
+# Backup files
+*.bak
+*.backup
