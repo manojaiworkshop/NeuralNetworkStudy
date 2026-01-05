@@ -1,0 +1,1 @@
+now analyse this file and its cpp for implementation and explain each line of code with example and explain what is activation withs asci diagram and create a example for understandin whole concept of activation and how it use matix internally
