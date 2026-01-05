@@ -122,3 +122,59 @@ target_link_libraries(activation_cuda_example
 set_target_properties(activation_cuda_example PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
 )
+
+# Create loss library
+add_library(loss_lib STATIC
+    src/loss.cpp
+)
+
+# Link loss library with matrix library
+target_link_libraries(loss_lib matrix_lib)
+
+# Create loss functions detailed example executable
+add_executable(loss_detailed_example
+    example/loss_detailed_example.cpp
+)
+
+# Link the libraries to the loss example
+target_link_libraries(loss_detailed_example 
+    matrix_lib
+    activation_lib
+    loss_lib
+)
+
+# Create CUDA loss library
+add_library(loss_cuda_lib STATIC
+    src/loss_cuda.cu
+)
+
+# Set CUDA properties for loss library
+set_target_properties(loss_cuda_lib PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# Link loss CUDA library with other libraries
+target_link_libraries(loss_cuda_lib 
+    matrix_lib
+    matrix_cuda_lib
+    loss_lib
+)
+
+# Create CUDA loss functions example executable
+add_executable(loss_cuda_example
+    example/loss_cuda_example.cpp
+)
+
+# Link all libraries to the CUDA loss example
+target_link_libraries(loss_cuda_example 
+    matrix_lib
+    matrix_cuda_lib
+    loss_lib
+    loss_cuda_lib
+)
+
+# Set CUDA properties for the executable
+set_target_properties(loss_cuda_example PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)
