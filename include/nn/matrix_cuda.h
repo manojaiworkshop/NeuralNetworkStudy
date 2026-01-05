@@ -27,6 +27,10 @@ public:
     MatrixCUDA(size_t rows, size_t cols);
     MatrixCUDA(size_t rows, size_t cols, double value);
     MatrixCUDA(const Matrix& other);
+    MatrixCUDA(const MatrixCUDA& other);  // Copy constructor
+    
+    // Assignment operator
+    MatrixCUDA& operator=(const MatrixCUDA& other);
     
     // Destructor
     ~MatrixCUDA();

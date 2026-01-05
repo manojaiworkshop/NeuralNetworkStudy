@@ -178,3 +178,124 @@ target_link_libraries(loss_cuda_example
 set_target_properties(loss_cuda_example PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
 )
+
+# Create optimizer library
+add_library(optimizer_lib STATIC
+    src/optimizer.cpp
+)
+
+# Link optimizer library with matrix library
+target_link_libraries(optimizer_lib matrix_lib)
+
+# Create optimizer example executable
+add_executable(optimizer_example
+    example/optimizer_example.cpp
+)
+
+# Link the libraries to the optimizer example
+target_link_libraries(optimizer_example 
+    matrix_lib
+    optimizer_lib
+)
+
+# Create CUDA optimizer library
+add_library(optimizer_cuda_lib STATIC
+    src/optimizer_cuda.cu
+)
+
+# Set CUDA properties for optimizer library
+set_target_properties(optimizer_cuda_lib PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# Link optimizer CUDA library with other libraries
+target_link_libraries(optimizer_cuda_lib 
+    matrix_lib
+    matrix_cuda_lib
+    optimizer_lib
+)
+
+# Create CUDA optimizer example executable
+add_executable(optimizer_cuda_example
+    example/optimizer_cuda_example.cpp
+)
+
+# Link all libraries to the CUDA optimizer example
+target_link_libraries(optimizer_cuda_example 
+    matrix_lib
+    matrix_cuda_lib
+    optimizer_lib
+    optimizer_cuda_lib
+)
+
+# Set CUDA properties for the executable
+set_target_properties(optimizer_cuda_example PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)
+
+# Create layer library
+add_library(layer_lib STATIC
+    src/layer.cpp
+)
+
+# Link layer library with required libraries
+target_link_libraries(layer_lib 
+    matrix_lib
+    activation_lib
+)
+
+# Create layer example executable
+add_executable(layer_example
+    example/layer_example.cpp
+)
+
+# Link the libraries to the layer example
+target_link_libraries(layer_example 
+    matrix_lib
+    activation_lib
+    loss_lib
+    layer_lib
+)
+
+# Create CUDA layer library
+add_library(layer_cuda_lib STATIC
+    src/layer_cuda.cu
+)
+
+# Set CUDA properties for layer library
+set_target_properties(layer_cuda_lib PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# Link layer CUDA library with other libraries
+target_link_libraries(layer_cuda_lib 
+    matrix_lib
+    matrix_cuda_lib
+    activation_lib
+    activation_cuda_lib
+    layer_lib
+)
+
+# Create CUDA layer example executable
+add_executable(layer_cuda_example
+    example/layer_cuda_example.cpp
+)
+
+# Link all libraries to the CUDA layer example
+target_link_libraries(layer_cuda_example 
+    matrix_lib
+    matrix_cuda_lib
+    activation_lib
+    activation_cuda_lib
+    loss_lib
+    loss_cuda_lib
+    layer_lib
+    layer_cuda_lib
+)
+
+# Set CUDA properties for the executable
+set_target_properties(layer_cuda_example PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)

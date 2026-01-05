@@ -175,6 +175,38 @@ MatrixCUDA::MatrixCUDA(size_t rows, size_t cols, double value)
 MatrixCUDA::MatrixCUDA(const Matrix& other)
     : Matrix(other), d_data(nullptr), dataOnGPU(false) {}
 
+// Copy constructor
+MatrixCUDA::MatrixCUDA(const MatrixCUDA& other)
+    : Matrix(other), d_data(nullptr), dataOnGPU(false) {
+    // If other has GPU data, copy it
+    if (other.dataOnGPU && other.d_data != nullptr) {
+        allocateGPU();
+        size_t size = getRows() * getCols() * sizeof(float);
+        CUDA_CHECK(cudaMemcpy(d_data, other.d_data, size, cudaMemcpyDeviceToDevice));
+        dataOnGPU = true;
+    }
+}
+
+// Copy assignment operator
+MatrixCUDA& MatrixCUDA::operator=(const MatrixCUDA& other) {
+    if (this != &other) {
+        // Free existing GPU memory
+        freeGPU();
+        
+        // Copy CPU data (base class assignment)
+        Matrix::operator=(other);
+        
+        // Copy GPU data if it exists
+        if (other.dataOnGPU && other.d_data != nullptr) {
+            allocateGPU();
+            size_t size = getRows() * getCols() * sizeof(float);
+            CUDA_CHECK(cudaMemcpy(d_data, other.d_data, size, cudaMemcpyDeviceToDevice));
+            dataOnGPU = true;
+        }
+    }
+    return *this;
+}
+
 // Destructor
 MatrixCUDA::~MatrixCUDA() {
     freeGPU();
