@@ -166,6 +166,8 @@ void example3_CudaBackwardPass() {
     output.toCPU();
     std::cout << "Forward output: [" << output.get(0,0) << ", " 
               << output.get(0,1) << "]\n\n";
+
+    
     
     // Backward pass on GPU
     Matrix grad_cpu(1, 2);
@@ -497,12 +499,12 @@ int main() {
 )" << RESET << "\n";
     
     try {
-        example1_CudaLayerBasics();
-        example2_CudaForwardPass();
-        example3_CudaBackwardPass();
-        example4_PerformanceComparison();
+        // example1_CudaLayerBasics();
+        // example2_CudaForwardPass();
+        // example3_CudaBackwardPass();
+        // example4_PerformanceComparison();
         example5_TrainingOnGPU();
-        example6_MemoryEfficiency();
+        // example6_MemoryEfficiency();
         
         printHeader("SUMMARY");
         std::cout << GREEN << "✓" << RESET << " All CUDA layer examples completed successfully!\n\n";

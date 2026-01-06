@@ -198,57 +198,67 @@ void getLaunchConfig(int size, int& blocks, int& threads) {
 
 MatrixCUDA SigmoidCUDA::forward(const MatrixCUDA& input) const {
     int size = input.getRows() * input.getCols();
-    MatrixCUDA output(input.getRows(), input.getCols());
-    
-    // Ensure input is on CUDA
-    const_cast<MatrixCUDA&>(input).toGPU();
-    output.toGPU();
-    
-    // Get device pointers (would need to add getter methods to MatrixCUDA)
-    // For now, we'll use the applyCUDA method with a device function pointer
-    // This is a simplified approach - in production, you'd want direct access
-    
     int blocks, threads;
     getLaunchConfig(size, blocks, threads);
     
-    // Note: This requires MatrixCUDA to expose device pointer
-    // For this implementation, we'll create a wrapper approach
+    // Create output matrix
+    MatrixCUDA result(input.getRows(), input.getCols());
+    result.toGPU();
     
-    // Create a simple element-wise operation using existing MatrixCUDA functionality
-    // In a real implementation, you'd want direct kernel calls
+    // Ensure input is on GPU
+    MatrixCUDA input_gpu = input;
+    if (!input_gpu.isOnGPU()) {
+        input_gpu.toGPU();
+    }
     
-    // Workaround: Use lambda on CPU side and let MatrixCUDA handle CUDA
-    // This is not optimal but works with current MatrixCUDA interface
+    // Launch kernel directly on GPU memory
+    sigmoid_forward_kernel<<<blocks, threads>>>(
+        input_gpu.getDevicePointer(),
+        result.getDevicePointer(),
+        size
+    );
     
-    std::cout << "Warning: Using CPU-side activation with CUDA matrix (suboptimal)" << std::endl;
-    std::cout << "For production: Extend MatrixCUDA to expose device pointers" << std::endl;
+    // Check for errors
+    cudaError_t err = cudaGetLastError();
+    if (err != cudaSuccess) {
+        std::cerr << "CUDA error in SigmoidCUDA::forward: " 
+                  << cudaGetErrorString(err) << std::endl;
+    }
     
-    // Convert to CPU, apply, convert back (not efficient but demonstrates concept)
-    Matrix cpu_input = static_cast<Matrix>(input);
-    Matrix cpu_output = cpu_input.apply([](double x) {
-        return 1.0 / (1.0 + std::exp(-x));
-    });
-    
-    return MatrixCUDA(cpu_output);
+    return result;
 }
 
 MatrixCUDA SigmoidCUDA::backward(const MatrixCUDA& input, 
                                const MatrixCUDA& output_gradient) const {
-    // Forward pass to get activated values
-    MatrixCUDA activated = forward(input);
+    int size = input.getRows() * input.getCols();
+    int blocks, threads;
+    getLaunchConfig(size, blocks, threads);
     
-    // Convert to CPU for now (same limitation as forward)
-    Matrix cpu_activated = static_cast<Matrix>(activated);
-    Matrix cpu_grad = static_cast<Matrix>(output_gradient);
+    // Create output matrix
+    MatrixCUDA grad_input(input.getRows(), input.getCols());
+    grad_input.toGPU();
     
-    // Compute derivative: σ'(x) = σ(x) * (1 - σ(x))
-    Matrix derivative = cpu_activated.hadamard(cpu_activated.apply([](double x) {
-        return 1.0 - x;
-    }));
+    // Ensure inputs are on GPU
+    MatrixCUDA input_gpu = input;
+    MatrixCUDA grad_out_gpu = output_gradient;
+    if (!input_gpu.isOnGPU()) input_gpu.toGPU();
+    if (!grad_out_gpu.isOnGPU()) grad_out_gpu.toGPU();
     
-    Matrix grad_input = derivative.hadamard(cpu_grad);
+    // Launch backward kernel
+    sigmoid_backward_kernel<<<blocks, threads>>>(
+        input_gpu.getDevicePointer(),
+        grad_out_gpu.getDevicePointer(),
+        grad_input.getDevicePointer(),
+        size
+    );
     
-    return MatrixCUDA(grad_input);
+    cudaError_t err = cudaGetLastError();
+    if (err != cudaSuccess) {
+        std::cerr << "CUDA error in SigmoidCUDA::backward: " 
+                  << cudaGetErrorString(err) << std::endl;
+    }
+    
+    return grad_input;
 }
 
 std::unique_ptr<ActivationCUDA> SigmoidCUDA::clone() const {
@@ -258,25 +268,59 @@ std::unique_ptr<ActivationCUDA> SigmoidCUDA::clone() const {
 // ==================== RELU CUDA IMPLEMENTATION ====================
 
 MatrixCUDA ReLUCUDA::forward(const MatrixCUDA& input) const {
-    Matrix cpu_input = static_cast<Matrix>(input);
-    Matrix cpu_output = cpu_input.apply([](double x) {
-        return std::max(0.0, x);
-    });
-    return MatrixCUDA(cpu_output);
+    int size = input.getRows() * input.getCols();
+    int blocks, threads;
+    getLaunchConfig(size, blocks, threads);
+    
+    MatrixCUDA output(input.getRows(), input.getCols());
+    output.toGPU();
+    
+    MatrixCUDA input_gpu = input;
+    if (!input_gpu.isOnGPU()) input_gpu.toGPU();
+    
+    relu_forward_kernel<<<blocks, threads>>>(
+        input_gpu.getDevicePointer(),
+        output.getDevicePointer(),
+        size
+    );
+    
+    cudaError_t err = cudaGetLastError();
+    if (err != cudaSuccess) {
+        std::cerr << "CUDA error in ReLUCUDA::forward: " 
+                  << cudaGetErrorString(err) << std::endl;
+    }
+    
+    return output;
 }
 
 MatrixCUDA ReLUCUDA::backward(const MatrixCUDA& input, 
                             const MatrixCUDA& output_gradient) const {
-    Matrix cpu_input = static_cast<Matrix>(input);
-    Matrix cpu_grad = static_cast<Matrix>(output_gradient);
+    int size = input.getRows() * input.getCols();
+    int blocks, threads;
+    getLaunchConfig(size, blocks, threads);
     
-    Matrix derivative = cpu_input.apply([](double x) {
-        return (x > 0.0) ? 1.0 : 0.0;
-    });
+    MatrixCUDA grad_input(input.getRows(), input.getCols());
+    grad_input.toGPU();
     
-    Matrix grad_input = derivative.hadamard(cpu_grad);
+    MatrixCUDA input_gpu = input;
+    MatrixCUDA grad_out_gpu = output_gradient;
+    if (!input_gpu.isOnGPU()) input_gpu.toGPU();
+    if (!grad_out_gpu.isOnGPU()) grad_out_gpu.toGPU();
     
-    return MatrixCUDA(grad_input);
+    relu_backward_kernel<<<blocks, threads>>>(
+        input_gpu.getDevicePointer(),
+        grad_out_gpu.getDevicePointer(),
+        grad_input.getDevicePointer(),
+        size
+    );
+    
+    cudaError_t err = cudaGetLastError();
+    if (err != cudaSuccess) {
+        std::cerr << "CUDA error in ReLUCUDA::backward: " 
+                  << cudaGetErrorString(err) << std::endl;
+    }
+    
+    return grad_input;
 }
 
 std::unique_ptr<ActivationCUDA> ReLUCUDA::clone() const {

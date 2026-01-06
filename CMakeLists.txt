@@ -2,8 +2,8 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set CUDA toolkit path to use CUDA 12.9 (compatible with GCC 11)
-# set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
-set(CMAKE_CUDA_COMPILER /usr/bin/nvcc)
+set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
+#set(CMAKE_CUDA_COMPILER /usr/bin/nvcc)
 
 # Project name and version - now with CUDA support!
 project(NeuralNetworkFromScratch VERSION 1.0 LANGUAGES CXX CUDA)
@@ -297,5 +297,86 @@ target_link_libraries(layer_cuda_example
 
 # Set CUDA properties for the executable
 set_target_properties(layer_cuda_example PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)
+
+# Create network library
+add_library(network_lib STATIC
+    src/network.cpp
+)
+
+# Link network library with required libraries
+target_link_libraries(network_lib 
+    matrix_lib
+    activation_lib
+    loss_lib
+    optimizer_lib
+    layer_lib
+)
+
+# Create network complete example executable
+add_executable(network_complete_example
+    example/network_complete_example.cpp
+)
+
+# Link all required libraries to the network example
+target_link_libraries(network_complete_example 
+    matrix_lib
+    activation_lib
+    loss_lib
+    optimizer_lib
+    layer_lib
+    network_lib
+)
+
+# Create CUDA network library
+add_library(network_cuda_lib STATIC
+    src/network_cuda.cu
+)
+
+# Set CUDA properties for network library
+set_target_properties(network_cuda_lib PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# Link network CUDA library with other libraries
+target_link_libraries(network_cuda_lib 
+    matrix_lib
+    matrix_cuda_lib
+    activation_lib
+    activation_cuda_lib
+    loss_lib
+    loss_cuda_lib
+    optimizer_lib
+    optimizer_cuda_lib
+    layer_lib
+    layer_cuda_lib
+    network_lib
+)
+
+# Create CUDA network example executable
+add_executable(network_cuda_example
+    example/network_cuda_example.cpp
+)
+
+# Link all libraries to the CUDA network example
+target_link_libraries(network_cuda_example 
+    matrix_lib
+    matrix_cuda_lib
+    activation_lib
+    activation_cuda_lib
+    loss_lib
+    loss_cuda_lib
+    optimizer_lib
+    optimizer_cuda_lib
+    layer_lib
+    layer_cuda_lib
+    network_lib
+    network_cuda_lib
+)
+
+# Set CUDA properties for the executable
+set_target_properties(network_cuda_example PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
 )

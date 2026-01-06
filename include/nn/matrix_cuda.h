@@ -48,6 +48,10 @@ public:
     void toCPU();    // Transfer data to CPU
     bool isOnGPU() const { return dataOnGPU; }
     
+    // Device pointer access (for custom CUDA kernels)
+    float* getDevicePointer() { return d_data; }
+    const float* getDevicePointer() const { return d_data; }
+    
     // Utility
     void printGPUInfo() const;
     static void printDeviceInfo();
