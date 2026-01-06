@@ -380,3 +380,34 @@ target_link_libraries(network_cuda_example
 set_target_properties(network_cuda_example PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
 )
+
+
+##################################################
+# Create CUDA network sample executable
+add_executable(network_cuda_sample
+    example/network_cuda_sample.cpp
+)
+
+# Link all libraries to the CUDA network sample
+target_link_libraries(network_cuda_sample 
+    matrix_lib
+    matrix_cuda_lib
+    activation_lib
+    activation_cuda_lib
+    loss_lib
+    loss_cuda_lib
+    optimizer_lib
+    optimizer_cuda_lib
+    layer_lib
+    layer_cuda_lib
+    network_lib
+    network_cuda_lib
+)
+
+# Set CUDA properties for the sample executable
+set_target_properties(network_cuda_sample PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)
+
+
+###########################################################
