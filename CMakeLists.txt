@@ -233,6 +233,21 @@ add_executable(transformer_cuda_example example/transformer_cuda_example.cpp)
 target_link_libraries(transformer_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(transformer_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
+# Intent-Slot Detection Example (CUDA)
+add_executable(intent_slot_cuda_example example/intent_slot_detection_cuda_example.cpp)
+target_link_libraries(intent_slot_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+set_target_properties(intent_slot_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent-Slot Training (CUDA - Simple)
+add_executable(intent_slot_cuda_train example/intent_slot_cuda_train.cpp)
+target_link_libraries(intent_slot_cuda_train 
+    transformer_cuda_lib 
+    attention_cuda_lib 
+    matrix_cuda_lib 
+    activation_cuda_lib 
+    matrix_lib)
+set_target_properties(intent_slot_cuda_train PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
 # =============================================================================
 # BUILD INFORMATION
 # =============================================================================
