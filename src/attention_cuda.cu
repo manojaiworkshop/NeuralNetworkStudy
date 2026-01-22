@@ -100,6 +100,14 @@ MatrixCUDA ScaledDotProductAttentionCUDA::forward(const MatrixCUDA& Q,
     size_t seq_len = K.getRows();
     size_t d_v = V.getCols();
     
+    // Ensure inputs are on GPU
+    MatrixCUDA Q_gpu = Q;
+    MatrixCUDA K_gpu = K;
+    MatrixCUDA V_gpu = V;
+    Q_gpu.toGPU();
+    K_gpu.toGPU();
+    V_gpu.toGPU();
+    
     // Allocate GPU memory if needed
     allocateGPU(std::max(batch_seq, seq_len));
     
@@ -108,9 +116,10 @@ MatrixCUDA ScaledDotProductAttentionCUDA::forward(const MatrixCUDA& Q,
     dim3 gridDim((batch_seq + 15) / 16, (seq_len + 15) / 16);
     
     scaled_dot_product_kernel<<<gridDim, blockDim>>>(
-        Q.getDevicePointer(), K.getDevicePointer(), d_scores,
+        Q_gpu.getDevicePointer(), K_gpu.getDevicePointer(), d_scores,
         batch_seq, d_k, seq_len, scale_factor
     );
+    CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
     
     // Apply softmax
@@ -118,10 +127,12 @@ MatrixCUDA ScaledDotProductAttentionCUDA::forward(const MatrixCUDA& Q,
     dim3 softmax_block(256);
     
     softmax_kernel<<<softmax_grid, softmax_block>>>(d_scores, batch_seq, seq_len);
+    CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
     
     // Copy attention weights for caching
     cached_attention_weights = MatrixCUDA(batch_seq, seq_len);
+    cached_attention_weights.toGPU();
     CUDA_CHECK(cudaMemcpy(cached_attention_weights.getDevicePointer(), d_scores,
                          batch_seq * seq_len * sizeof(float), cudaMemcpyDeviceToDevice));
     
@@ -131,15 +142,16 @@ MatrixCUDA ScaledDotProductAttentionCUDA::forward(const MatrixCUDA& Q,
     
     dim3 output_grid((batch_seq + 15) / 16, (d_v + 15) / 16);
     attention_output_kernel<<<output_grid, blockDim>>>(
-        d_scores, V.getDevicePointer(), output.getDevicePointer(),
+        d_scores, V_gpu.getDevicePointer(), output.getDevicePointer(),
         batch_seq, seq_len, d_v
     );
+    CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
     
     // Cache for backward
-    cached_Q = Q;
-    cached_K = K;
-    cached_V = V;
+    cached_Q = Q_gpu;
+    cached_K = K_gpu;
+    cached_V = V_gpu;
     
     return output;
 }
