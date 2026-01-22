@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <chrono>
 
 void print_gpu_info() {
     int deviceCount;
@@ -63,10 +64,10 @@ void demo_attention_cuda() {
     // Forward pass (self-attention: Q=K=V=input)
     std::cout << "Step 4: Running attention on GPU...\n";
     
-    auto start = std::chrono::high_performance_clock::now();
+    auto start = std::chrono::steady_clock::now();
     MatrixCUDA output = attention.forward(input, input, input);
     cudaDeviceSynchronize();
-    auto end = std::chrono::high_performance_clock::now();
+    auto end = std::chrono::steady_clock::now();
     
     std::cout << "           GPU Forward Pass Time: " 
               << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
@@ -141,10 +142,10 @@ void demo_multi_head_attention_cuda() {
     // Forward pass
     std::cout << "Step 3: Running " << num_heads << " attention heads in parallel...\n";
     
-    auto start = std::chrono::high_performance_clock::now();
+    auto start = std::chrono::steady_clock::now();
     MatrixCUDA output = mha.forward(input, input, input);
     cudaDeviceSynchronize();
-    auto end = std::chrono::high_performance_clock::now();
+    auto end = std::chrono::steady_clock::now();
     
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     std::cout << "           GPU Forward Pass: " << duration << " μs\n";
@@ -220,10 +221,10 @@ void demo_transformer_encoder_cuda() {
     std::cout << "Step 3: Encoding sequence on GPU...\n";
     std::cout << "           Processing through " << num_layers << " layers:\n";
     
-    auto start = std::chrono::high_performance_clock::now();
+    auto start = std::chrono::steady_clock::now();
     MatrixCUDA encoded = encoder.forward(input);
     cudaDeviceSynchronize();
-    auto end = std::chrono::high_performance_clock::now();
+    auto end = std::chrono::steady_clock::now();
     
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     

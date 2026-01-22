@@ -1,18 +1,24 @@
 cmake_minimum_required(VERSION 3.10)
-project(NeuralNetworkFromScratch CUDA CXX)
+
+# Set CUDA toolkit path to use CUDA 12.9 (compatible with GCC 11)
+set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
+
+# Project name and version - now with CUDA support!
+project(NeuralNetworkFromScratch VERSION 1.0 LANGUAGES CXX CUDA)
 
 # Set C++ and CUDA standards
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CUDA_STANDARD 14)
+set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
 # Set CUDA architecture (RTX 5000 = Turing = compute_75)
 set(CMAKE_CUDA_ARCHITECTURES 75)
 
-# Fix CUDA 11.5 compatibility with GCC 11
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --allow-unsupported-compiler -std=c++14")
-set(CMAKE_CUDA_HOST_COMPILER "/usr/bin/g++-10")
+# CUDA compiler flags - fix compatibility with GCC 11
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --expt-relaxed-constexpr -std=c++17")
+set(CMAKE_CUDA_FLAGS_DEBUG "-g -G")  # Enable CUDA debugging
+set(CMAKE_CUDA_FLAGS_RELEASE "-O3")  # Optimization
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -173,7 +179,7 @@ target_link_libraries(attention_example attention_lib lstm_lib gru_lib rnn_lib m
 
 # Matrix Example (CUDA)
 add_executable(matrix_cuda_example example/matrix_cuda_example.cpp)
-target_link_libraries(matrix_cuda_example matrix_cuda_lib)
+target_link_libraries(matrix_cuda_example matrix_lib matrix_cuda_lib)
 set_target_properties(matrix_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # Activation Example (CUDA)
@@ -213,7 +219,7 @@ set_target_properties(lstm_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON
 
 # Attention Example (CUDA)
 add_executable(attention_cuda_example example/attention_cuda_example.cpp)
-target_link_libraries(attention_cuda_example attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+target_link_libraries(attention_cuda_example matrix_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(attention_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # =============================================================================
