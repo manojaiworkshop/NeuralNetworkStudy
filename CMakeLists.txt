@@ -2,13 +2,17 @@ cmake_minimum_required(VERSION 3.10)
 project(NeuralNetworkFromScratch CUDA CXX)
 
 # Set C++ and CUDA standards
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_STANDARD 14)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
 # Set CUDA architecture (RTX 5000 = Turing = compute_75)
 set(CMAKE_CUDA_ARCHITECTURES 75)
+
+# Fix CUDA 11.5 compatibility with GCC 11
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --allow-unsupported-compiler -std=c++14")
+set(CMAKE_CUDA_HOST_COMPILER "/usr/bin/g++-10")
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -117,6 +121,12 @@ target_link_libraries(lstm_cuda_lib matrix_cuda_lib activation_cuda_lib)
 target_include_directories(lstm_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 set_target_properties(lstm_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
+# Attention Library (CUDA)
+add_library(attention_cuda_lib STATIC src/attention_cuda.cu)
+target_link_libraries(attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+target_include_directories(attention_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+set_target_properties(attention_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
 # =============================================================================
 # CPU EXAMPLES
 # =============================================================================
@@ -200,6 +210,11 @@ set_target_properties(rnn_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 add_executable(lstm_cuda_example example/lstm_cuda_example.cpp)
 target_link_libraries(lstm_cuda_example lstm_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(lstm_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Attention Example (CUDA)
+add_executable(attention_cuda_example example/attention_cuda_example.cpp)
+target_link_libraries(attention_cuda_example attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+set_target_properties(attention_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # =============================================================================
 # BUILD INFORMATION
