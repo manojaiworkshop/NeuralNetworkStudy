@@ -106,6 +106,9 @@ public:
     // Getters
     size_t getInputSize() const { return input_size; }
     size_t getHiddenSize() const { return hidden_size; }
+    int getParameterCount() const { 
+        return input_size * hidden_size + hidden_size * hidden_size + hidden_size; 
+    }
     Matrix getWeightsXH() const { return W_xh; }
     Matrix getWeightsHH() const { return W_hh; }
     Matrix getBiasH() const { return b_h; }

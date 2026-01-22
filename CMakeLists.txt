@@ -190,6 +190,32 @@ add_executable(rnn_cuda_example example/rnn_cuda_example.cpp)
 target_link_libraries(rnn_cuda_example rnn_cuda_lib matrix_cuda_lib activation_cuda_lib optimizer_cuda_lib loss_cuda_lib)
 
 # ============================================================================
+# LSTM LIBRARY
+# ============================================================================
+
+# CPU LSTM Library
+add_library(lstm_lib STATIC src/lstm.cpp)
+target_link_libraries(lstm_lib matrix_lib activation_lib)
+target_include_directories(lstm_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+# LSTM Example (CPU)
+add_executable(lstm_example example/lstm_example.cpp)
+target_link_libraries(lstm_example lstm_lib gru_lib rnn_lib matrix_lib activation_lib)
+
+# Comparison Example (RNN vs LSTM vs GRU)
+add_executable(comparison_example example/comparison_example.cpp)
+target_link_libraries(comparison_example lstm_lib gru_lib rnn_lib matrix_lib activation_lib)
+
+# ============================================================================
+# GRU LIBRARY
+# ============================================================================
+
+# CPU GRU Library
+add_library(gru_lib STATIC src/gru.cpp)
+target_link_libraries(gru_lib matrix_lib activation_lib)
+target_include_directories(gru_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+# ============================================================================
 # BUILD INFORMATION
 # ============================================================================
 
@@ -219,6 +245,7 @@ message(STATUS "    - activation_example")
 message(STATUS "    - layer_example")
 message(STATUS "    - loss_detailed_example")
 message(STATUS "    - optimizer_example")
+message(STATUS "    - lstm_example")
 message(STATUS "    - network_complete_example")
 message(STATUS "    - rnn_example")
 message(STATUS "  GPU Examples:")
