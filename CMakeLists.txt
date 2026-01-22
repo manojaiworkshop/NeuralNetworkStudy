@@ -133,6 +133,12 @@ target_link_libraries(attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 target_include_directories(attention_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 set_target_properties(attention_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
+# Transformer Library (CUDA)
+add_library(transformer_cuda_lib STATIC src/transformer_cuda.cu)
+target_link_libraries(transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+target_include_directories(transformer_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+set_target_properties(transformer_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
 # =============================================================================
 # CPU EXAMPLES
 # =============================================================================
@@ -221,6 +227,11 @@ set_target_properties(lstm_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON
 add_executable(attention_cuda_example example/attention_cuda_example.cpp)
 target_link_libraries(attention_cuda_example matrix_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(attention_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Transformer Example (CUDA)
+add_executable(transformer_cuda_example example/transformer_cuda_example.cpp)
+target_link_libraries(transformer_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+set_target_properties(transformer_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # =============================================================================
 # BUILD INFORMATION
