@@ -308,6 +308,7 @@ public:
     void updateParameters(double learning_rate);
     
     const MatrixCUDA& getEmbeddings() const { return embeddings; }
+    MatrixCUDA& getEmbeddings() { return embeddings; }
 };
 
 /**

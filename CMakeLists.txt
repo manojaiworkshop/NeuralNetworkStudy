@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set CUDA toolkit path to use CUDA 12.9 (compatible with GCC 11)
-set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
+# set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
+set(CMAKE_CUDA_COMPILER /usr/bin/nvcc)
 
 # Project name and version - now with CUDA support!
 project(NeuralNetworkFromScratch VERSION 1.0 LANGUAGES CXX CUDA)

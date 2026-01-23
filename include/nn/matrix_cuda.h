@@ -46,6 +46,7 @@ public:
     // Memory management
     void toGPU();    // Transfer data to GPU
     void toCPU();    // Transfer data to CPU
+    void forceToGPU() { dataOnGPU = false; toGPU(); }  // Force transfer even if already on GPU
     bool isOnGPU() const { return dataOnGPU; }
     
     // Device pointer access (for custom CUDA kernels)
