@@ -31,6 +31,10 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 add_library(matrix_lib STATIC src/matrix.cpp)
 target_include_directories(matrix_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
+# Tokenizer Library
+add_library(tokenizer_lib STATIC src/transformer/tokenizer.cpp)
+target_include_directories(tokenizer_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
 # Activation Library (CPU)
 add_library(activation_lib STATIC src/activation.cpp)
 target_link_libraries(activation_lib matrix_lib)
@@ -233,10 +237,10 @@ add_executable(transformer_cuda_example example/transformer_cuda_example.cpp)
 target_link_libraries(transformer_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(transformer_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
-# Intent-Slot Detection Example (CUDA)
-add_executable(intent_slot_cuda_example example/intent_slot_detection_cuda_example.cpp)
-target_link_libraries(intent_slot_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
-set_target_properties(intent_slot_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+# Intent-Slot Detection Example (CUDA) - Commented out (file doesn't exist)
+# add_executable(intent_slot_cuda_example example/intent_slot_detection_cuda_example.cpp)
+# target_link_libraries(intent_slot_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
+# set_target_properties(intent_slot_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # Intent-Slot Training (CUDA - Simple)
 add_executable(intent_slot_cuda_train example/intent_slot_cuda_train.cpp)
@@ -247,6 +251,17 @@ target_link_libraries(intent_slot_cuda_train
     activation_cuda_lib 
     matrix_lib)
 set_target_properties(intent_slot_cuda_train PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent-Slot Chatbot (CUDA - Interactive)
+add_executable(intent_slot_cuda_chat example/intent_slot_cuda_chat.cpp)
+target_link_libraries(intent_slot_cuda_chat 
+    transformer_cuda_lib 
+    attention_cuda_lib 
+    matrix_cuda_lib 
+    activation_cuda_lib 
+    tokenizer_lib
+    matrix_lib)
+set_target_properties(intent_slot_cuda_chat PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # =============================================================================
 # BUILD INFORMATION
