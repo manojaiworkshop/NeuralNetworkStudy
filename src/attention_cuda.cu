@@ -71,20 +71,30 @@ __global__ void attention_output_kernel(const float* attn_weights, const float* 
 
 ScaledDotProductAttentionCUDA::ScaledDotProductAttentionCUDA(size_t d_k)
     : d_k(d_k), scale_factor(1.0 / std::sqrt(static_cast<double>(d_k))),
-      d_scores(nullptr), d_attention_weights(nullptr), gpu_allocated(false) {}
+      d_scores(nullptr), d_attention_weights(nullptr), gpu_allocated(false), allocated_max_seq_len(0) {}
 
 ScaledDotProductAttentionCUDA::~ScaledDotProductAttentionCUDA() {
     freeGPU();
 }
 
 void ScaledDotProductAttentionCUDA::allocateGPU(size_t max_seq_len) {
-    if (gpu_allocated) return;
+    // Reallocate if we need more space
+    if (gpu_allocated && max_seq_len <= allocated_max_seq_len) {
+        return;  // Already have enough space
+    }
+    
+    // Free old allocation if it exists
+    if (gpu_allocated) {
+        freeGPU();
+    }
     
     size_t scores_size = max_seq_len * max_seq_len * sizeof(float);
+    
     CUDA_CHECK(cudaMalloc(&d_scores, scores_size));
     CUDA_CHECK(cudaMalloc(&d_attention_weights, scores_size));
     
     gpu_allocated = true;
+    allocated_max_seq_len = max_seq_len;
 }
 
 void ScaledDotProductAttentionCUDA::freeGPU() {
@@ -104,6 +114,7 @@ MatrixCUDA ScaledDotProductAttentionCUDA::forward(const MatrixCUDA& Q,
     MatrixCUDA Q_gpu = Q;
     MatrixCUDA K_gpu = K;
     MatrixCUDA V_gpu = V;
+    
     Q_gpu.toGPU();
     K_gpu.toGPU();
     V_gpu.toGPU();
@@ -247,14 +258,21 @@ MatrixCUDA MultiHeadAttentionCUDA::forward(const MatrixCUDA& Q,
     
     // Process each attention head in parallel
     for (size_t h = 0; h < num_heads; h++) {
-        // Project Q, K, V
-        MatrixCUDA Q_proj = Q.multiplyGPU(W_Q[h]);
-        MatrixCUDA K_proj = K.multiplyGPU(W_K[h]);
-        MatrixCUDA V_proj = V.multiplyGPU(W_V[h]);
-        
-        // Apply attention
-        MatrixCUDA head_output = attention_heads[h]->forward(Q_proj, K_proj, V_proj);
-        head_outputs.push_back(head_output);
+        try {
+            // Project Q, K, V
+            MatrixCUDA Q_proj = Q.multiplyGPU(W_Q[h]);
+            MatrixCUDA K_proj = K.multiplyGPU(W_K[h]);
+            MatrixCUDA V_proj = V.multiplyGPU(W_V[h]);
+            
+            // Apply attention
+            MatrixCUDA head_output = attention_heads[h]->forward(Q_proj, K_proj, V_proj);
+            head_outputs.push_back(head_output);
+        } catch (const std::exception& e) {
+            std::cerr << "Error in MultiHeadAttention head " << h << ": " << e.what() << std::endl;
+            std::cerr << "  Q shape: " << Q.getRows() << "x" << Q.getCols() << std::endl;
+            std::cerr << "  W_Q[" << h << "] shape: " << W_Q[h].getRows() << "x" << W_Q[h].getCols() << std::endl;
+            throw;
+        }
     }
     
     // Concatenate heads (simplified - should be done on GPU)
@@ -780,6 +798,10 @@ void TokenEmbeddingCUDA::initializeEmbeddings() {
 }
 
 MatrixCUDA TokenEmbeddingCUDA::forward(const std::vector<std::vector<int>>& token_ids) {
+    if (token_ids.empty() || token_ids[0].empty()) {
+        throw std::runtime_error("Empty token_ids in TokenEmbeddingCUDA::forward");
+    }
+    
     size_t batch_size = token_ids.size();
     size_t seq_len = token_ids[0].size();
     
@@ -789,6 +811,13 @@ MatrixCUDA TokenEmbeddingCUDA::forward(const std::vector<std::vector<int>>& toke
     for (size_t b = 0; b < batch_size; b++) {
         for (size_t t = 0; t < seq_len; t++) {
             int token_id = token_ids[b][t];
+            
+            // Bounds checking - critical for preventing CUDA errors
+            if (token_id < 0 || static_cast<size_t>(token_id) >= vocab_size) {
+                // Use unknown token ID (1) for out of bounds
+                token_id = 1;
+            }
+            
             size_t out_idx = b * seq_len + t;
             
             for (size_t d = 0; d < embedding_dim; d++) {
@@ -813,6 +842,12 @@ void TokenEmbeddingCUDA::backward(const MatrixCUDA& grad_output,
     for (size_t b = 0; b < batch_size; b++) {
         for (size_t t = 0; t < seq_len; t++) {
             int token_id = token_ids[b][t];
+            
+            // Bounds checking
+            if (token_id < 0 || static_cast<size_t>(token_id) >= vocab_size) {
+                continue; // Skip invalid token IDs
+            }
+            
             size_t out_idx = b * seq_len + t;
             
             for (size_t d = 0; d < embedding_dim; d++) {

@@ -3,6 +3,7 @@
 #include <device_launch_parameters.h>
 #include <iostream>
 #include <cmath>
+#include <climits>
 
 // CUDA error checking macro
 #define CUDA_CHECK(call) \
@@ -182,7 +183,10 @@ MatrixCUDA::MatrixCUDA(const MatrixCUDA& other)
     if (other.dataOnGPU && other.d_data != nullptr) {
         allocateGPU();
         size_t size = getRows() * getCols() * sizeof(float);
-        CUDA_CHECK(cudaMemcpy(d_data, other.d_data, size, cudaMemcpyDeviceToDevice));
+        cudaError_t err = cudaMemcpy(d_data, other.d_data, size, cudaMemcpyDeviceToDevice);
+        if (err != cudaSuccess) {
+            throw std::runtime_error(std::string("cudaMemcpy failed in copy constructor: ") + cudaGetErrorString(err));
+        }
         dataOnGPU = true;
     }
 }
@@ -216,7 +220,16 @@ MatrixCUDA::~MatrixCUDA() {
 void MatrixCUDA::allocateGPU() {
     if (d_data == nullptr) {
         size_t size = getRows() * getCols() * sizeof(float);
-        CUDA_CHECK(cudaMalloc(&d_data, size));
+        
+        // Clear any previous errors
+        cudaGetLastError();
+        
+        cudaError_t err = cudaMalloc(&d_data, size);
+        if (err != cudaSuccess) {
+            std::cerr << "cudaMalloc failed for " << getRows() << "x" << getCols() 
+                      << " (" << size << " bytes): " << cudaGetErrorString(err) << std::endl;
+            throw std::runtime_error(std::string("cudaMalloc failed: ") + cudaGetErrorString(err));
+        }
     }
 }
 
@@ -231,7 +244,18 @@ void MatrixCUDA::freeGPU() {
 
 // Copy data from CPU to GPU
 void MatrixCUDA::copyToGPU() {
+    if (getRows() == 0 || getCols() == 0) {
+        throw std::runtime_error("Cannot copy empty matrix to GPU");
+    }
+    
+    // Clear any previous errors before allocation
+    cudaGetLastError();
+    
     allocateGPU();
+    
+    if (d_data == nullptr) {
+        throw std::runtime_error("Failed to allocate GPU memory in copyToGPU");
+    }
     
     // Convert double to float and flatten matrix
     size_t size = getRows() * getCols();
@@ -243,9 +267,17 @@ void MatrixCUDA::copyToGPU() {
         }
     }
     
+    // Clear any previous errors before copy
+    cudaGetLastError();
+    
     // Copy to GPU
-    CUDA_CHECK(cudaMemcpy(d_data, h_temp, size * sizeof(float),
-                         cudaMemcpyHostToDevice));
+    cudaError_t err = cudaMemcpy(d_data, h_temp, size * sizeof(float), cudaMemcpyHostToDevice);
+    if (err != cudaSuccess) {
+        delete[] h_temp;
+        std::cerr << "cudaMemcpy H2D failed for " << getRows() << "x" << getCols() 
+                  << " (" << size * sizeof(float) << " bytes): " << cudaGetErrorString(err) << std::endl;
+        throw std::runtime_error(std::string("cudaMemcpy failed: ") + cudaGetErrorString(err));
+    }
     
     delete[] h_temp;
     dataOnGPU = true;
@@ -295,27 +327,124 @@ MatrixCUDA MatrixCUDA::multiplyGPU(const MatrixCUDA& other) const {
         throw std::invalid_argument("Matrix dimensions incompatible for multiplication");
     }
     
+    // Check for zero-sized matrices
+    if (getRows() == 0 || getCols() == 0 || other.getCols() == 0) {
+        throw std::runtime_error("Cannot multiply zero-sized matrices on GPU");
+    }
+    
+    // Check for overflow when casting to int
+    if (getRows() > INT_MAX || getCols() > INT_MAX || other.getCols() > INT_MAX) {
+        throw std::runtime_error("Matrix dimensions too large for CUDA kernel (> INT_MAX)");
+    }
+    
+    // Create mutable copies if needed
+    MatrixCUDA A_copy = *this;
+    MatrixCUDA B_copy = other;
+    
     // Ensure data is on GPU
-    const_cast<MatrixCUDA*>(this)->toGPU();
-    const_cast<MatrixCUDA&>(other).toGPU();
+    A_copy.toGPU();
+    
+    // Check for errors after A copy
+    cudaError_t error_A = cudaGetLastError();
+    if (error_A != cudaSuccess) {
+        std::cerr << "CUDA error after copying A to GPU: " << cudaGetErrorString(error_A) << std::endl;
+        throw std::runtime_error(std::string("Failed to copy A to GPU: ") + cudaGetErrorString(error_A));
+    }
+    
+    B_copy.toGPU();
+    
+    // Check for errors after B copy
+    cudaError_t error_B = cudaGetLastError();
+    if (error_B != cudaSuccess) {
+        std::cerr << "CUDA error after copying B to GPU: " << cudaGetErrorString(error_B) << std::endl;
+        throw std::runtime_error(std::string("Failed to copy B to GPU: ") + cudaGetErrorString(error_B));
+    }
+    
+    // Extra validation
+    if (!A_copy.dataOnGPU || !B_copy.dataOnGPU) {
+        throw std::runtime_error("Failed to transfer matrices to GPU before multiplication");
+    }
+    
+    // Validate GPU pointers
+    if (A_copy.d_data == nullptr || B_copy.d_data == nullptr) {
+        throw std::runtime_error("GPU data pointer is null in multiplyGPU");
+    }
     
     // Create result matrix
     MatrixCUDA result(getRows(), other.getCols());
+    
+    // Check for errors after creating result
+    cudaError_t error_result_create = cudaGetLastError();
+    if (error_result_create != cudaSuccess) {
+        std::cerr << "CUDA error after creating result matrix: " << cudaGetErrorString(error_result_create) << std::endl;
+        throw std::runtime_error(std::string("Failed to create result matrix: ") + cudaGetErrorString(error_result_create));
+    }
+    
     result.allocateGPU();
     
-    // Set up grid and block dimensions
-    dim3 blockSize(TILE_SIZE, TILE_SIZE);
-    dim3 gridSize((other.getCols() + TILE_SIZE - 1) / TILE_SIZE,
-                  (getRows() + TILE_SIZE - 1) / TILE_SIZE);
+    // Check for errors after allocating result
+    cudaError_t error_result_alloc = cudaGetLastError();
+    if (error_result_alloc != cudaSuccess) {
+        std::cerr << "CUDA error after allocating result on GPU: " << cudaGetErrorString(error_result_alloc) << std::endl;
+        std::cerr << "  Trying to allocate: " << result.getRows() << "x" << result.getCols() 
+                  << " = " << (result.getRows() * result.getCols() * sizeof(float)) << " bytes" << std::endl;
+        throw std::runtime_error(std::string("Failed to allocate result on GPU: ") + cudaGetErrorString(error_result_alloc));
+    }
     
-    // Launch kernel (using optimized shared memory version)
-    matmul_shared_kernel<<<gridSize, blockSize>>>(
-        d_data, other.d_data, result.d_data,
-        getRows(), other.getCols(), getCols()
+    if (result.d_data == nullptr) {
+        throw std::runtime_error("Failed to allocate GPU memory for result");
+    }
+    
+    // Check for any errors from allocations
+    cudaError_t alloc_error = cudaGetLastError();
+    if (alloc_error != cudaSuccess) {
+        std::cerr << "CUDA error after allocations: " << cudaGetErrorString(alloc_error) << std::endl;
+        throw std::runtime_error(std::string("CUDA error before kernel: ") + cudaGetErrorString(alloc_error));
+    }
+    
+    // Set up grid and block dimensions
+    dim3 blockSize(16, 16);
+    dim3 gridSize((other.getCols() + 15) / 16,
+                  (getRows() + 15) / 16);
+    
+    // Validate dimensions for CUDA
+    if (gridSize.x == 0 || gridSize.y == 0) {
+        throw std::runtime_error("Invalid grid dimensions in multiplyGPU");
+    }
+    
+    // Validate grid/block configuration
+    if (blockSize.x * blockSize.y > 1024) {
+        throw std::runtime_error("Block size exceeds maximum threads per block");
+    }
+    
+    // Debug output for kernel launch parameters
+    #ifdef DEBUG_MATMUL
+    std::cout << "Launching matmul_kernel:" << std::endl;
+    std::cout << "  A: " << getRows() << "x" << getCols() << " @ " << A_copy.d_data << std::endl;
+    std::cout << "  B: " << other.getRows() << "x" << other.getCols() << " @ " << B_copy.d_data << std::endl;
+    std::cout << "  C: " << result.getRows() << "x" << result.getCols() << " @ " << result.d_data << std::endl;
+    std::cout << "  Grid: (" << gridSize.x << ", " << gridSize.y << "), Block: (" 
+              << blockSize.x << ", " << blockSize.y << ")" << std::endl;
+    std::cout << "  M=" << getRows() << ", N=" << other.getCols() << ", K=" << getCols() << std::endl;
+    #endif
+    
+    // Launch kernel
+    matmul_kernel<<<gridSize, blockSize>>>(
+        A_copy.d_data, B_copy.d_data, result.d_data,
+        static_cast<int>(getRows()), 
+        static_cast<int>(other.getCols()), 
+        static_cast<int>(getCols())
     );
     
     // Check for errors
-    CUDA_CHECK(cudaGetLastError());
+    cudaError_t kernel_error = cudaGetLastError();
+    if (kernel_error != cudaSuccess) {
+        std::cerr << "CUDA matmul error: A(" << getRows() << "x" << getCols() 
+                  << ") * B(" << other.getRows() << "x" << other.getCols() << ")"
+                  << " - " << cudaGetErrorString(kernel_error) << std::endl;
+        throw std::runtime_error(std::string("CUDA kernel failed: ") + cudaGetErrorString(kernel_error));
+    }
+    
     CUDA_CHECK(cudaDeviceSynchronize());
     
     result.dataOnGPU = true;
@@ -330,8 +459,10 @@ MatrixCUDA MatrixCUDA::addGPU(const MatrixCUDA& other) const {
         throw std::invalid_argument("Matrix dimensions must match for addition");
     }
     
-    const_cast<MatrixCUDA*>(this)->toGPU();
-    const_cast<MatrixCUDA&>(other).toGPU();
+    MatrixCUDA A_copy = *this;
+    MatrixCUDA B_copy = other;
+    A_copy.toGPU();
+    B_copy.toGPU();
     
     MatrixCUDA result(getRows(), getCols());
     result.allocateGPU();
@@ -340,7 +471,7 @@ MatrixCUDA MatrixCUDA::addGPU(const MatrixCUDA& other) const {
     int blockSize = 256;
     int gridSize = (size + blockSize - 1) / blockSize;
     
-    add_kernel<<<gridSize, blockSize>>>(d_data, other.d_data, result.d_data, size);
+    add_kernel<<<gridSize, blockSize>>>(A_copy.d_data, B_copy.d_data, result.d_data, size);
     
     CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
@@ -357,8 +488,10 @@ MatrixCUDA MatrixCUDA::subtractGPU(const MatrixCUDA& other) const {
         throw std::invalid_argument("Matrix dimensions must match for subtraction");
     }
     
-    const_cast<MatrixCUDA*>(this)->toGPU();
-    const_cast<MatrixCUDA&>(other).toGPU();
+    MatrixCUDA A_copy = *this;
+    MatrixCUDA B_copy = other;
+    A_copy.toGPU();
+    B_copy.toGPU();
     
     MatrixCUDA result(getRows(), getCols());
     result.allocateGPU();
@@ -367,7 +500,7 @@ MatrixCUDA MatrixCUDA::subtractGPU(const MatrixCUDA& other) const {
     int blockSize = 256;
     int gridSize = (size + blockSize - 1) / blockSize;
     
-    subtract_kernel<<<gridSize, blockSize>>>(d_data, other.d_data, result.d_data, size);
+    subtract_kernel<<<gridSize, blockSize>>>(A_copy.d_data, B_copy.d_data, result.d_data, size);
     
     CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
@@ -384,8 +517,10 @@ MatrixCUDA MatrixCUDA::hadamardGPU(const MatrixCUDA& other) const {
         throw std::invalid_argument("Matrix dimensions must match for Hadamard product");
     }
     
-    const_cast<MatrixCUDA*>(this)->toGPU();
-    const_cast<MatrixCUDA&>(other).toGPU();
+    MatrixCUDA A_copy = *this;
+    MatrixCUDA B_copy = other;
+    A_copy.toGPU();
+    B_copy.toGPU();
     
     MatrixCUDA result(getRows(), getCols());
     result.allocateGPU();
@@ -394,7 +529,7 @@ MatrixCUDA MatrixCUDA::hadamardGPU(const MatrixCUDA& other) const {
     int blockSize = 256;
     int gridSize = (size + blockSize - 1) / blockSize;
     
-    hadamard_kernel<<<gridSize, blockSize>>>(d_data, other.d_data, result.d_data, size);
+    hadamard_kernel<<<gridSize, blockSize>>>(A_copy.d_data, B_copy.d_data, result.d_data, size);
     
     CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
@@ -407,7 +542,8 @@ MatrixCUDA MatrixCUDA::hadamardGPU(const MatrixCUDA& other) const {
 
 // GPU Transpose
 MatrixCUDA MatrixCUDA::transposeGPU() const {
-    const_cast<MatrixCUDA*>(this)->toGPU();
+    MatrixCUDA A_copy = *this;
+    A_copy.toGPU();
     
     MatrixCUDA result(getCols(), getRows());
     result.allocateGPU();
@@ -416,7 +552,7 @@ MatrixCUDA MatrixCUDA::transposeGPU() const {
     dim3 gridSize((getCols() + 15) / 16, (getRows() + 15) / 16);
     
     transpose_kernel<<<gridSize, blockSize>>>(
-        d_data, result.d_data, getRows(), getCols()
+        A_copy.d_data, result.d_data, getRows(), getCols()
     );
     
     CUDA_CHECK(cudaGetLastError());

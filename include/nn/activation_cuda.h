@@ -139,6 +139,32 @@ public:
     float getAlpha() const { return alpha; }
 };
 
+// ==================== LINEAR CUDA ====================
+
+/**
+ * @brief CUDA-accelerated Linear/Identity activation
+ * Returns input unchanged (no operation)
+ */
+class LinearCUDA : public ActivationCUDA {
+public:
+    LinearCUDA() = default;
+    
+    MatrixCUDA forward(const MatrixCUDA& input) const override {
+        return input;
+    }
+    
+    MatrixCUDA backward(const MatrixCUDA& input, 
+                       const MatrixCUDA& output_gradient) const override {
+        return output_gradient;
+    }
+    
+    std::string getName() const override { return "LinearCUDA"; }
+    
+    std::unique_ptr<ActivationCUDA> clone() const override {
+        return std::make_unique<LinearCUDA>();
+    }
+};
+
 // ==================== CUDA KERNEL DECLARATIONS ====================
 
 // Device functions for activation computations

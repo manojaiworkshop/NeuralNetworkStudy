@@ -31,6 +31,7 @@ private:
     MatrixCUDA cached_attention_weights;
     
     bool gpu_allocated;
+    size_t allocated_max_seq_len;  // Track allocated buffer size
     
     void allocateGPU(size_t max_seq_len);
     void freeGPU();
