@@ -1,0 +1,12 @@
+{
+  "d_ff": 256,
+  "d_model": 64,
+  "dropout": 0.1,
+  "max_seq_len": 50,
+  "model_type": "intent_slot_transformer_cuda",
+  "num_heads": 4,
+  "num_intents": 4,
+  "num_layers": 2,
+  "num_slots": 9,
+  "vocab_size": 103
+}

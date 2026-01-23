@@ -1,0 +1,36 @@
+{
+  "id_to_intent": {
+    "0": "book_flight",
+    "1": "cancel_flight",
+    "2": "get_fare",
+    "3": "get_weather"
+  },
+  "id_to_slot": {
+    "0": "B-city",
+    "1": "B-date",
+    "2": "B-from_city",
+    "3": "B-to_city",
+    "4": "I-city",
+    "5": "I-date",
+    "6": "I-from_city",
+    "7": "I-to_city",
+    "8": "O"
+  },
+  "intent_to_id": {
+    "book_flight": 0,
+    "cancel_flight": 1,
+    "get_fare": 2,
+    "get_weather": 3
+  },
+  "slot_to_id": {
+    "B-city": 0,
+    "B-date": 1,
+    "B-from_city": 2,
+    "B-to_city": 3,
+    "I-city": 4,
+    "I-date": 5,
+    "I-from_city": 6,
+    "I-to_city": 7,
+    "O": 8
+  }
+}
