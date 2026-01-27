@@ -1,0 +1,4000 @@
+{
+  "examples": [
+    {
+      "text": "cancel my flight to chicago",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "chicago"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to chicago",
+      "tokens": [
+        "cancel",
+        "to",
+        "chicago"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book flight from houston to denver sunday",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "houston",
+        "to",
+        "denver",
+        "sunday"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "cancel to seattle",
+      "tokens": [
+        "cancel",
+        "to",
+        "seattle"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to washington",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "washington"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book a flight from dallas to tokyo",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "dallas",
+        "to",
+        "tokyo"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in jacksonville",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "jacksonville"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "what is the fare from tokyo to baltimore",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "tokyo",
+        "to",
+        "baltimore"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much is a flight from fort worth to indianapolis",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "fort",
+        "worth",
+        "to",
+        "indianapolis"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in detroit",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "detroit"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for bangalore",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "bangalore"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "i need to cancel flight from las vegas",
+      "tokens": [
+        "i",
+        "need",
+        "to",
+        "cancel",
+        "flight",
+        "from",
+        "las",
+        "vegas"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city"
+      ]
+    },
+    {
+      "text": "show weather for philadelphia next month",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "philadelphia",
+        "next",
+        "month"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "cost from chicago to toronto",
+      "tokens": [
+        "cost",
+        "from",
+        "chicago",
+        "to",
+        "toronto"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to mumbai",
+      "tokens": [
+        "cancel",
+        "to",
+        "mumbai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to chennai",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "chennai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book from philadelphia to cleveland",
+      "tokens": [
+        "book",
+        "from",
+        "philadelphia",
+        "to",
+        "cleveland"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to new york",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "new",
+        "york"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "price from baltimore to hyderabad",
+      "tokens": [
+        "price",
+        "from",
+        "baltimore",
+        "to",
+        "hyderabad"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "price from sydney to delhi",
+      "tokens": [
+        "price",
+        "from",
+        "sydney",
+        "to",
+        "delhi"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book flight from las vegas to berlin next week",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "las",
+        "vegas",
+        "to",
+        "berlin",
+        "next",
+        "week"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "weather in london",
+      "tokens": [
+        "weather",
+        "in",
+        "london"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "fare from jacksonville to philadelphia",
+      "tokens": [
+        "fare",
+        "from",
+        "jacksonville",
+        "to",
+        "philadelphia"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from tulsa to cleveland",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "tulsa",
+        "to",
+        "cleveland"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from hyderabad to chicago",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "hyderabad",
+        "to",
+        "chicago"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fly from milwaukee to austin",
+      "tokens": [
+        "fly",
+        "from",
+        "milwaukee",
+        "to",
+        "austin"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to sydney",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "sydney"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in san diego",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "san",
+        "diego"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "book from chennai to portland",
+      "tokens": [
+        "book",
+        "from",
+        "chennai",
+        "to",
+        "portland"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in cleveland",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "cleveland"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "get me a ticket from minneapolis to miami",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "minneapolis",
+        "to",
+        "miami"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in memphis",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "memphis"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "how much is a flight from chicago to los angeles",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "chicago",
+        "to",
+        "los",
+        "angeles"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "weather in tulsa",
+      "tokens": [
+        "weather",
+        "in",
+        "tulsa"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "i need flight from fort worth to detroit",
+      "tokens": [
+        "i",
+        "need",
+        "flight",
+        "from",
+        "fort",
+        "worth",
+        "to",
+        "detroit"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to tokyo",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "tokyo"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from memphis to indianapolis",
+      "tokens": [
+        "fare",
+        "from",
+        "memphis",
+        "to",
+        "indianapolis"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "will it rain in toronto monday",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "toronto",
+        "monday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "what is the fare from charlotte to delhi",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "charlotte",
+        "to",
+        "delhi"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book from milwaukee to columbus",
+      "tokens": [
+        "book",
+        "from",
+        "milwaukee",
+        "to",
+        "columbus"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much to fly from dallas to paris",
+      "tokens": [
+        "how",
+        "much",
+        "to",
+        "fly",
+        "from",
+        "dallas",
+        "to",
+        "paris"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to philadelphia",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "philadelphia"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to nashville",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "nashville"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in orlando",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "orlando"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "how much is a flight from sydney to san jose",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "sydney",
+        "to",
+        "san",
+        "jose"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fly from houston to houston",
+      "tokens": [
+        "fly",
+        "from",
+        "houston",
+        "to",
+        "houston"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in portland",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "portland"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "fly from boston to baltimore",
+      "tokens": [
+        "fly",
+        "from",
+        "boston",
+        "to",
+        "baltimore"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from london to columbus",
+      "tokens": [
+        "fare",
+        "from",
+        "london",
+        "to",
+        "columbus"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to tokyo",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "tokyo"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from toronto to atlanta",
+      "tokens": [
+        "cost",
+        "from",
+        "toronto",
+        "to",
+        "atlanta"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book a flight from new york to san jose",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "new",
+        "york",
+        "to",
+        "san",
+        "jose"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fly from nashville to san antonio",
+      "tokens": [
+        "fly",
+        "from",
+        "nashville",
+        "to",
+        "san",
+        "antonio"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "cancel to phoenix",
+      "tokens": [
+        "cancel",
+        "to",
+        "phoenix"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from dallas to seattle",
+      "tokens": [
+        "cost",
+        "from",
+        "dallas",
+        "to",
+        "seattle"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to columbus",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "columbus"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from philadelphia to berlin",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "philadelphia",
+        "to",
+        "berlin"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from orlando to las vegas",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "orlando",
+        "to",
+        "las",
+        "vegas"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "how much is a flight from columbus to new york",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "columbus",
+        "to",
+        "new",
+        "york"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from houston to tulsa",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "houston",
+        "to",
+        "tulsa"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "temperature in denver",
+      "tokens": [
+        "temperature",
+        "in",
+        "denver"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "weather in las vegas",
+      "tokens": [
+        "weather",
+        "in",
+        "las",
+        "vegas"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "show weather for miami saturday",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "miami",
+        "saturday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "get me a ticket from indianapolis to nashville",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "indianapolis",
+        "to",
+        "nashville"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in delhi",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "delhi"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "fare from milwaukee to milwaukee",
+      "tokens": [
+        "fare",
+        "from",
+        "milwaukee",
+        "to",
+        "milwaukee"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in tokyo",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "tokyo"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "get me a ticket from hyderabad to atlanta",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "hyderabad",
+        "to",
+        "atlanta"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "temperature in mumbai",
+      "tokens": [
+        "temperature",
+        "in",
+        "mumbai"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "book flight from philadelphia to atlanta next month",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "philadelphia",
+        "to",
+        "atlanta",
+        "next",
+        "month"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "cancel booking from tokyo to san francisco",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "tokyo",
+        "to",
+        "san",
+        "francisco"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "weather in mumbai",
+      "tokens": [
+        "weather",
+        "in",
+        "mumbai"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "what is the fare from san antonio to san jose",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "san",
+        "antonio",
+        "to",
+        "san",
+        "jose"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fare from tulsa to detroit",
+      "tokens": [
+        "fare",
+        "from",
+        "tulsa",
+        "to",
+        "detroit"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in memphis",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "memphis"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "how much is a flight from bangalore to sydney",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "bangalore",
+        "to",
+        "sydney"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fly from boston to san diego",
+      "tokens": [
+        "fly",
+        "from",
+        "boston",
+        "to",
+        "san",
+        "diego"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from sydney to chennai",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "sydney",
+        "to",
+        "chennai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from boston to houston",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "boston",
+        "to",
+        "houston"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from seattle to dallas",
+      "tokens": [
+        "fare",
+        "from",
+        "seattle",
+        "to",
+        "dallas"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from madrid to cleveland",
+      "tokens": [
+        "fare",
+        "from",
+        "madrid",
+        "to",
+        "cleveland"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from memphis to kolkata",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "memphis",
+        "to",
+        "kolkata"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book a flight from fort worth to bangalore",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "fort",
+        "worth",
+        "to",
+        "bangalore"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to sydney",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "sydney"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to charlotte",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "charlotte"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i need flight from washington to cleveland",
+      "tokens": [
+        "i",
+        "need",
+        "flight",
+        "from",
+        "washington",
+        "to",
+        "cleveland"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from milwaukee to orlando",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "milwaukee",
+        "to",
+        "orlando"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from detroit to cleveland",
+      "tokens": [
+        "fare",
+        "from",
+        "detroit",
+        "to",
+        "cleveland"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to tulsa",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "tulsa"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from cleveland to boston",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "cleveland",
+        "to",
+        "boston"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to san antonio",
+      "tokens": [
+        "cancel",
+        "to",
+        "san",
+        "antonio"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "what is the fare from chennai to delhi",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "chennai",
+        "to",
+        "delhi"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to seattle",
+      "tokens": [
+        "cancel",
+        "to",
+        "seattle"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much to fly from portland to indianapolis",
+      "tokens": [
+        "how",
+        "much",
+        "to",
+        "fly",
+        "from",
+        "portland",
+        "to",
+        "indianapolis"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the fare from denver to seattle",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "denver",
+        "to",
+        "seattle"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show weather for delhi today",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "delhi",
+        "today"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "show me weather forecast for miami",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "miami"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "how much is a flight from mumbai to mumbai",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "mumbai",
+        "to",
+        "mumbai"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the fare from san jose to paris",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "san",
+        "jose",
+        "to",
+        "paris"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show weather for houston next week",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "houston",
+        "next",
+        "week"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "cancel my flight to bangalore",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "bangalore"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fly from new york to seattle",
+      "tokens": [
+        "fly",
+        "from",
+        "new",
+        "york",
+        "to",
+        "seattle"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from san francisco to columbus",
+      "tokens": [
+        "cost",
+        "from",
+        "san",
+        "francisco",
+        "to",
+        "columbus"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i need to cancel flight from chennai",
+      "tokens": [
+        "i",
+        "need",
+        "to",
+        "cancel",
+        "flight",
+        "from",
+        "chennai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to los angeles",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "los",
+        "angeles"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "show weather for boston tomorrow",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "boston",
+        "tomorrow"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "book a flight from washington to philadelphia",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "washington",
+        "to",
+        "philadelphia"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book from detroit to san diego",
+      "tokens": [
+        "book",
+        "from",
+        "detroit",
+        "to",
+        "san",
+        "diego"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "will it rain in washington saturday",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "washington",
+        "saturday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "temperature in delhi",
+      "tokens": [
+        "temperature",
+        "in",
+        "delhi"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "fare from new york to bangalore",
+      "tokens": [
+        "fare",
+        "from",
+        "new",
+        "york",
+        "to",
+        "bangalore"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "weather in tulsa",
+      "tokens": [
+        "weather",
+        "in",
+        "tulsa"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "cost from minneapolis to atlanta",
+      "tokens": [
+        "cost",
+        "from",
+        "minneapolis",
+        "to",
+        "atlanta"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to san diego",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "san",
+        "diego"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from san diego to new york",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "san",
+        "diego",
+        "to",
+        "new",
+        "york"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "temperature in delhi",
+      "tokens": [
+        "temperature",
+        "in",
+        "delhi"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for san diego",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "san",
+        "diego"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "cost from charlotte to san jose",
+      "tokens": [
+        "cost",
+        "from",
+        "charlotte",
+        "to",
+        "san",
+        "jose"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fly from miami to tokyo",
+      "tokens": [
+        "fly",
+        "from",
+        "miami",
+        "to",
+        "tokyo"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book flight from los angeles to san antonio friday",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "los",
+        "angeles",
+        "to",
+        "san",
+        "antonio",
+        "friday"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "will it rain in oakland today",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "oakland",
+        "today"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "how much is a flight from portland to chicago",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "portland",
+        "to",
+        "chicago"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from cleveland to houston",
+      "tokens": [
+        "cost",
+        "from",
+        "cleveland",
+        "to",
+        "houston"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show weather for chicago next month",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "chicago",
+        "next",
+        "month"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "book flight from dallas to philadelphia yesterday",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "dallas",
+        "to",
+        "philadelphia",
+        "yesterday"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "cost from baltimore to new york",
+      "tokens": [
+        "cost",
+        "from",
+        "baltimore",
+        "to",
+        "new",
+        "york"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "book flight from delhi to kolkata next month",
+      "tokens": [
+        "book",
+        "flight",
+        "from",
+        "delhi",
+        "to",
+        "kolkata",
+        "next",
+        "month"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "fly from austin to seattle",
+      "tokens": [
+        "fly",
+        "from",
+        "austin",
+        "to",
+        "seattle"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from dallas to cleveland",
+      "tokens": [
+        "fare",
+        "from",
+        "dallas",
+        "to",
+        "cleveland"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book a flight from paris to charlotte",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "paris",
+        "to",
+        "charlotte"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for indianapolis",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "indianapolis"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "i need to cancel flight from mumbai",
+      "tokens": [
+        "i",
+        "need",
+        "to",
+        "cancel",
+        "flight",
+        "from",
+        "mumbai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city"
+      ]
+    },
+    {
+      "text": "i want to fly from madrid to los angeles",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "madrid",
+        "to",
+        "los",
+        "angeles"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fly from baltimore to phoenix",
+      "tokens": [
+        "fly",
+        "from",
+        "baltimore",
+        "to",
+        "phoenix"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much is a flight from seattle to indianapolis",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "seattle",
+        "to",
+        "indianapolis"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how is weather in boston",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "boston"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "what is the fare from bangalore to miami",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "bangalore",
+        "to",
+        "miami"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from boston to bangalore",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "boston",
+        "to",
+        "bangalore"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from dallas to kolkata",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "dallas",
+        "to",
+        "kolkata"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from charlotte to san jose",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "charlotte",
+        "to",
+        "san",
+        "jose"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "what is the fare from seattle to bangalore",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "fare",
+        "from",
+        "seattle",
+        "to",
+        "bangalore"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in austin",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "austin"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show weather for chennai tuesday",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "chennai",
+        "tuesday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "cancel booking from dallas to paris",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "dallas",
+        "to",
+        "paris"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to chicago",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "chicago"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "fare from oakland to chicago",
+      "tokens": [
+        "fare",
+        "from",
+        "oakland",
+        "to",
+        "chicago"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to minneapolis",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "minneapolis"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much to fly from jacksonville to detroit",
+      "tokens": [
+        "how",
+        "much",
+        "to",
+        "fly",
+        "from",
+        "jacksonville",
+        "to",
+        "detroit"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "temperature in fort worth",
+      "tokens": [
+        "temperature",
+        "in",
+        "fort",
+        "worth"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "how is weather in detroit",
+      "tokens": [
+        "how",
+        "is",
+        "weather",
+        "in",
+        "detroit"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "cancel my flight to seattle",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "seattle"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i need flight from los angeles to hyderabad",
+      "tokens": [
+        "i",
+        "need",
+        "flight",
+        "from",
+        "los",
+        "angeles",
+        "to",
+        "hyderabad"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from houston to philadelphia",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "houston",
+        "to",
+        "philadelphia"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for kolkata",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "kolkata"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "weather in cleveland",
+      "tokens": [
+        "weather",
+        "in",
+        "cleveland"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for new york",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "new",
+        "york"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "price from jacksonville to san diego",
+      "tokens": [
+        "price",
+        "from",
+        "jacksonville",
+        "to",
+        "san",
+        "diego"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to london",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "london"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i want to fly from austin to chicago",
+      "tokens": [
+        "i",
+        "want",
+        "to",
+        "fly",
+        "from",
+        "austin",
+        "to",
+        "chicago"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "will it rain in delhi yesterday",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "delhi",
+        "yesterday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "fly from houston to tulsa",
+      "tokens": [
+        "fly",
+        "from",
+        "houston",
+        "to",
+        "tulsa"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much to fly from sydney to kolkata",
+      "tokens": [
+        "how",
+        "much",
+        "to",
+        "fly",
+        "from",
+        "sydney",
+        "to",
+        "kolkata"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to phoenix",
+      "tokens": [
+        "cancel",
+        "to",
+        "phoenix"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book a flight from austin to washington",
+      "tokens": [
+        "book",
+        "a",
+        "flight",
+        "from",
+        "austin",
+        "to",
+        "washington"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "temperature in nashville",
+      "tokens": [
+        "temperature",
+        "in",
+        "nashville"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "cost from detroit to chicago",
+      "tokens": [
+        "cost",
+        "from",
+        "detroit",
+        "to",
+        "chicago"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to cleveland",
+      "tokens": [
+        "cancel",
+        "to",
+        "cleveland"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "what is the weather in indianapolis",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "indianapolis"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show weather for memphis next week",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "memphis",
+        "next",
+        "week"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "cancel flight to berlin",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "berlin"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel my flight to san antonio",
+      "tokens": [
+        "cancel",
+        "my",
+        "flight",
+        "to",
+        "san",
+        "antonio"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to denver",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "denver"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from charlotte to berlin",
+      "tokens": [
+        "cost",
+        "from",
+        "charlotte",
+        "to",
+        "berlin"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i need to cancel flight from los angeles",
+      "tokens": [
+        "i",
+        "need",
+        "to",
+        "cancel",
+        "flight",
+        "from",
+        "los",
+        "angeles"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city"
+      ]
+    },
+    {
+      "text": "book from san diego to philadelphia",
+      "tokens": [
+        "book",
+        "from",
+        "san",
+        "diego",
+        "to",
+        "philadelphia"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel to washington",
+      "tokens": [
+        "cancel",
+        "to",
+        "washington"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "book from philadelphia to san francisco",
+      "tokens": [
+        "book",
+        "from",
+        "philadelphia",
+        "to",
+        "san",
+        "francisco"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "fare from sydney to jacksonville",
+      "tokens": [
+        "fare",
+        "from",
+        "sydney",
+        "to",
+        "jacksonville"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "temperature in sydney",
+      "tokens": [
+        "temperature",
+        "in",
+        "sydney"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "fly from chennai to chicago",
+      "tokens": [
+        "fly",
+        "from",
+        "chennai",
+        "to",
+        "chicago"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to houston",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "houston"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to mumbai",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "mumbai"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much is a flight from indianapolis to delhi",
+      "tokens": [
+        "how",
+        "much",
+        "is",
+        "a",
+        "flight",
+        "from",
+        "indianapolis",
+        "to",
+        "delhi"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "i need flight from san jose to san diego",
+      "tokens": [
+        "i",
+        "need",
+        "flight",
+        "from",
+        "san",
+        "jose",
+        "to",
+        "san",
+        "diego"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city",
+        "I-to_city"
+      ]
+    },
+    {
+      "text": "will it rain in madrid next month",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "madrid",
+        "next",
+        "month"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "will it rain in houston yesterday",
+      "tokens": [
+        "will",
+        "it",
+        "rain",
+        "in",
+        "houston",
+        "yesterday"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date"
+      ]
+    },
+    {
+      "text": "cancel flight to seattle",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "seattle"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from milwaukee to boston",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "milwaukee",
+        "to",
+        "boston"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "price from indianapolis to bangalore",
+      "tokens": [
+        "price",
+        "from",
+        "indianapolis",
+        "to",
+        "bangalore"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "show me weather forecast for kolkata",
+      "tokens": [
+        "show",
+        "me",
+        "weather",
+        "forecast",
+        "for",
+        "kolkata"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city"
+      ]
+    },
+    {
+      "text": "show weather for detroit next month",
+      "tokens": [
+        "show",
+        "weather",
+        "for",
+        "detroit",
+        "next",
+        "month"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "B-date",
+        "I-date"
+      ]
+    },
+    {
+      "text": "what is the weather in new york",
+      "tokens": [
+        "what",
+        "is",
+        "the",
+        "weather",
+        "in",
+        "new",
+        "york"
+      ],
+      "intent": "get_weather",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-city",
+        "I-city"
+      ]
+    },
+    {
+      "text": "cancel reservation to memphis",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "memphis"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel reservation to bangalore",
+      "tokens": [
+        "cancel",
+        "reservation",
+        "to",
+        "bangalore"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cost from charlotte to austin",
+      "tokens": [
+        "cost",
+        "from",
+        "charlotte",
+        "to",
+        "austin"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "get me a ticket from madrid to memphis",
+      "tokens": [
+        "get",
+        "me",
+        "a",
+        "ticket",
+        "from",
+        "madrid",
+        "to",
+        "memphis"
+      ],
+      "intent": "book_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel flight to minneapolis",
+      "tokens": [
+        "cancel",
+        "flight",
+        "to",
+        "minneapolis"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "how much to fly from las vegas to washington",
+      "tokens": [
+        "how",
+        "much",
+        "to",
+        "fly",
+        "from",
+        "las",
+        "vegas",
+        "to",
+        "washington"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "I-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "price from mumbai to charlotte",
+      "tokens": [
+        "price",
+        "from",
+        "mumbai",
+        "to",
+        "charlotte"
+      ],
+      "intent": "get_fare",
+      "slots": [
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    },
+    {
+      "text": "cancel booking from tulsa to milwaukee",
+      "tokens": [
+        "cancel",
+        "booking",
+        "from",
+        "tulsa",
+        "to",
+        "milwaukee"
+      ],
+      "intent": "cancel_flight",
+      "slots": [
+        "O",
+        "O",
+        "O",
+        "B-from_city",
+        "O",
+        "B-to_city"
+      ]
+    }
+  ],
+  "intents": [
+    "book_flight",
+    "cancel_flight",
+    "get_fare",
+    "get_weather"
+  ],
+  "slots": [
+    "B-city",
+    "B-date",
+    "B-from_city",
+    "B-to_city",
+    "I-city",
+    "I-date",
+    "I-from_city",
+    "I-to_city",
+    "O"
+  ],
+  "num_examples": 200
+}

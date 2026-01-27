@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Set CUDA toolkit path to use CUDA 12.9 (compatible with GCC 11)
-# set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
-set(CMAKE_CUDA_COMPILER /usr/bin/nvcc)
+# Set CUDA toolkit path to use CUDA 12.8 (compatible with PyTorch)
+set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.8/bin/nvcc)
+set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-12.8)
 
 # Project name and version - now with CUDA support!
 project(NeuralNetworkFromScratch VERSION 1.0 LANGUAGES CXX CUDA)
@@ -81,6 +81,11 @@ add_library(attention_lib STATIC src/attention.cpp)
 target_link_libraries(attention_lib matrix_lib activation_lib)
 target_include_directories(attention_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
+# BERT Encoder Library (CPU)
+add_library(bert_encoder_lib STATIC src/bert_encoder.cpp)
+target_link_libraries(bert_encoder_lib matrix_lib activation_lib)
+target_include_directories(bert_encoder_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
 # =============================================================================
 # CUDA LIBRARIES (GPU)
 # =============================================================================
@@ -143,6 +148,12 @@ add_library(transformer_cuda_lib STATIC src/transformer_cuda.cu)
 target_link_libraries(transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 target_include_directories(transformer_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 set_target_properties(transformer_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# BERT Encoder Library (CUDA)
+add_library(bert_encoder_cuda_lib STATIC src/bert_encoder_cuda.cu)
+target_link_libraries(bert_encoder_cuda_lib matrix_cuda_lib activation_cuda_lib)
+target_include_directories(bert_encoder_cuda_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+set_target_properties(bert_encoder_cuda_lib PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # =============================================================================
 # CPU EXAMPLES
@@ -238,20 +249,78 @@ add_executable(transformer_cuda_example example/transformer_cuda_example.cpp)
 target_link_libraries(transformer_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 set_target_properties(transformer_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
+# BERT NLU Training Example (CUDA)
+add_executable(bert_nlu_train example/bert_nlu_train.cpp)
+target_link_libraries(bert_nlu_train bert_encoder_cuda_lib matrix_cuda_lib activation_cuda_lib matrix_lib)
+target_include_directories(bert_nlu_train PRIVATE ${CMAKE_SOURCE_DIR}/include)
+set_target_properties(bert_nlu_train PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
 # Intent-Slot Detection Example (CUDA) - Commented out (file doesn't exist)
 # add_executable(intent_slot_cuda_example example/intent_slot_detection_cuda_example.cpp)
 # target_link_libraries(intent_slot_cuda_example matrix_lib transformer_cuda_lib attention_cuda_lib matrix_cuda_lib activation_cuda_lib)
 # set_target_properties(intent_slot_cuda_example PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
-# Intent-Slot Training (CUDA - Simple)
+# Intent-Slot Training (CUDA - Simple - Slow version with CPU loops)
 add_executable(intent_slot_cuda_train example/intent_slot_cuda_train.cpp)
 target_link_libraries(intent_slot_cuda_train 
+    network_cuda_lib
+    layer_cuda_lib
+    optimizer_cuda_lib
+    loss_cuda_lib
+    lstm_cuda_lib
     transformer_cuda_lib 
     attention_cuda_lib 
     matrix_cuda_lib 
     activation_cuda_lib 
     matrix_lib)
 set_target_properties(intent_slot_cuda_train PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent-Slot Training v2 (CUDA - Properly optimized with GPU operations)
+add_executable(intent_slot_cuda_train_v2 example/intent_slot_cuda_train_v2.cpp)
+target_link_libraries(intent_slot_cuda_train_v2 
+    attention_cuda_lib 
+    layer_cuda_lib
+    activation_cuda_lib
+    matrix_cuda_lib 
+    loss_cuda_lib
+    matrix_lib)
+set_target_properties(intent_slot_cuda_train_v2 PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent CUDA Training (Working version with NeuralNetworkCUDA)
+add_executable(intent_cuda_train_working example/intent_cuda_train_working.cpp)
+target_link_libraries(intent_cuda_train_working 
+    network_cuda_lib
+    layer_cuda_lib
+    activation_cuda_lib
+    loss_cuda_lib
+    optimizer_cuda_lib
+    matrix_cuda_lib 
+    matrix_lib)
+set_target_properties(intent_cuda_train_working PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent-Slot Training Fixed (CUDA - Working version using NeuralNetworkCUDA)
+add_executable(intent_slot_cuda_train_fixed example/intent_slot_cuda_train_fixed.cpp)
+target_link_libraries(intent_slot_cuda_train_fixed 
+    network_cuda_lib
+    layer_cuda_lib
+    activation_cuda_lib
+    loss_cuda_lib
+    optimizer_cuda_lib
+    matrix_cuda_lib 
+    matrix_lib)
+set_target_properties(intent_slot_cuda_train_fixed PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# Intent-Slot Joint Training (CUDA - Complete Intent & Slot Detection)
+add_executable(intent_slot_cuda_joint_train example/intent_slot_cuda_joint_train.cpp)
+target_link_libraries(intent_slot_cuda_joint_train 
+    network_cuda_lib
+    layer_cuda_lib
+    activation_cuda_lib
+    loss_cuda_lib
+    optimizer_cuda_lib
+    matrix_cuda_lib 
+    matrix_lib)
+set_target_properties(intent_slot_cuda_joint_train PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 # Intent-Slot Chatbot (CUDA - Interactive)
 add_executable(intent_slot_cuda_chat example/intent_slot_cuda_chat.cpp)
@@ -263,6 +332,63 @@ target_link_libraries(intent_slot_cuda_chat
     tokenizer_lib
     matrix_lib)
 set_target_properties(intent_slot_cuda_chat PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+# =============================================================================
+# LIBTORCH (PyTorch C++ API) - For FinBERT Inference
+# =============================================================================
+
+# Find PyTorch installation
+execute_process(
+    COMMAND python -c "import torch; import os; print(os.path.dirname(torch.__file__))"
+    OUTPUT_VARIABLE TORCH_PATH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+if(TORCH_PATH)
+    message(STATUS "Found PyTorch at: ${TORCH_PATH}")
+    set(CMAKE_PREFIX_PATH "${TORCH_PATH}/share/cmake/Torch")
+    
+    find_package(Torch REQUIRED)
+    
+    if(Torch_FOUND)
+        message(STATUS "✅ LibTorch found!")
+        message(STATUS "   Include: ${TORCH_INCLUDE_DIRS}")
+        message(STATUS "   Libraries: ${TORCH_LIBRARIES}")
+        
+        # Joint NLU Inference (C++ with LibTorch + CUDA 12.8)
+        add_executable(joint_nlu_inference example/joint_nlu_inference.cpp)
+        
+        # Link CUDA 12.8 libraries to match PyTorch
+        target_link_libraries(joint_nlu_inference 
+            ${TORCH_LIBRARIES}
+            -Wl,--no-as-needed
+            -L/usr/local/cuda-12.8/targets/x86_64-linux/lib
+            -L/usr/lib/x86_64-linux-gnu
+            -lcudart
+            -lcupti
+        )
+        
+        target_include_directories(joint_nlu_inference PRIVATE 
+            ${TORCH_INCLUDE_DIRS}
+            /usr/local/cuda-12.8/include
+        )
+        
+        # Set RPATH to find CUDA 12.8 and torch libraries
+        set_target_properties(joint_nlu_inference PROPERTIES
+            CXX_STANDARD 17
+            CXX_STANDARD_REQUIRED ON
+            BUILD_RPATH "/usr/local/cuda-12.8/targets/x86_64-linux/lib:/usr/lib/x86_64-linux-gnu:${TORCH_PATH}/lib"
+            INSTALL_RPATH "/usr/local/cuda-12.8/targets/x86_64-linux/lib:/usr/lib/x86_64-linux-gnu:${TORCH_PATH}/lib"
+            BUILD_RPATH_USE_ORIGIN ON
+        )
+        
+        message(STATUS "✅ joint_nlu_inference target added")
+    else()
+        message(WARNING "⚠️  LibTorch not found, skipping joint_nlu_inference")
+    endif()
+else()
+    message(WARNING "⚠️  PyTorch not found in Python environment")
+endif()
 
 # =============================================================================
 # BUILD INFORMATION

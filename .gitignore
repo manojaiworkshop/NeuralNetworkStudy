@@ -6,17 +6,18 @@ cmake-build-*/
 sentencepiece/
 venv/
 vision_data/
+*.bin
 # Compiled Object files
 *.o
 *.obj
 *.lo
 *.slo
-
+*.pt
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
+finbert_env/
 # Compiled Static libraries
 *.a
 *.lib

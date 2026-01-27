@@ -8,5 +8,5 @@
   "num_intents": 4,
   "num_layers": 2,
   "num_slots": 9,
-  "vocab_size": 103
+  "vocab_size": 59
 }

@@ -1,0 +1,92 @@
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/ProsusAI/finbert/4556d13015211d73dccd3fdd39d39232506f3e43/config.json "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/ProsusAI/finbert/4556d13015211d73dccd3fdd39d39232506f3e43/tokenizer_config.json "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:__main__:Loaded 4477 examples
+INFO:__main__:Vocabularies - Intents: 18, Slots: 123, Entities: 79
+INFO:__main__:Loaded 497 examples
+INFO:__main__:Vocabularies - Intents: 18, Slots: 123, Entities: 79
+INFO:__main__:Loaded 888 examples
+INFO:__main__:Vocabularies - Intents: 18, Slots: 123, Entities: 79
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/ProsusAI/finbert/4556d13015211d73dccd3fdd39d39232506f3e43/config.json "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/ProsusAI/finbert/4556d13015211d73dccd3fdd39d39232506f3e43/config.json "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+🤖 Joint Intent + Slot + Entity Detection with FinBERT
+============================================================
+💻 Device: cuda
+🚀 GPU: NVIDIA RTX A2000 12GB
+
+📥 Loading tokenizer: ProsusAI/finbert
+
+📚 Loading ATIS datasets...
+📊 Dataset sizes: Train=4477, Val=497, Test=888
+🎯 Vocabularies: Intents=18, Slots=123, Entities=79
+
+📈 Sample Intent Distribution:
+  flight: 730
+  airfare: 91
+  ground_service: 46
+  abbreviation: 32
+  airline: 29
+
+🏷️  Sample Slot Types:
+  B-aircraft_code
+  B-airline_code
+  B-airline_name
+  B-airport_code
+  B-airport_name
+  B-arrive_date.date_relative
+  B-arrive_date.day_name
+  B-arrive_date.day_number
+  B-arrive_date.month_name
+  B-arrive_date.today_relative
+
+🎭 Sample Entity Types:
+  aircraft_code
+  airline_code
+  airline_name
+  airport_code
+  airport_name
+  arrive_date.date_relative
+  arrive_date.day_name
+  arrive_date.day_number
+  arrive_date.month_name
+  arrive_date.today_relative
+
+🏗️  Initializing Joint NLU Model...
+Traceback (most recent call last):
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/joint_nlu_finbert.py", line 498, in <module>
+    main()
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/joint_nlu_finbert.py", line 339, in main
+    model = JointNLUModel(
+            ^^^^^^^^^^^^^^
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/joint_nlu_finbert.py", line 183, in __init__
+    self.bert = AutoModel.from_pretrained(model_name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/finbert_env/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 372, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/finbert_env/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4063, in from_pretrained
+    config, dtype = _get_dtype(
+                    ^^^^^^^^^^^
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/finbert_env/lib/python3.12/site-packages/transformers/modeling_utils.py", line 808, in _get_dtype
+    state_dict = load_state_dict(
+                 ^^^^^^^^^^^^^^^^
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/finbert_env/lib/python3.12/site-packages/transformers/modeling_utils.py", line 341, in load_state_dict
+    check_torch_load_is_safe()
+  File "/home/manoj/Documents/CODES/NeuralNetworkStudy/finbert_env/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1253, in check_torch_load_is_safe
+    raise ValueError(
+ValueError: Due to a serious vulnerability issue in `torch.load`, even with `weights_only=True`, we now require users to upgrade torch to at least v2.6 in order to use the function. This version restriction does not apply when loading files with safetensors.
+See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-32434
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert/commits/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert/discussions?p=0 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/ProsusAI/finbert/commits/refs%2Fpr%2F29 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/refs%2Fpr%2F29/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/ProsusAI/finbert/resolve/refs%2Fpr%2F29/model.safetensors "HTTP/1.1 302 Found"
